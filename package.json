@@ -1,0 +1,14 @@
+{
+  "name": "nextflix",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "frontend": "npm --workspace apps/frontend run dev",
+    "backend": "npm --workspace apps/backend run start:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
