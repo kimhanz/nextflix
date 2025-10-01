@@ -1,8 +1,16 @@
+import Hero from "../components/Hero";
+import MovieGrid from "../components/MovieGrid";
+import Navbar from "../components/Navbar";
+
 export default function Home() {
   return (
-    <main className="min-h-screen p-6">
-      <h1 className="text-3xl font-bold">Nextflix</h1>
-      <p className="opacity-70">Welcome 👋</p>
+    <main>
+      <Navbar />
+      <Hero />
+      <section>
+        <h2>Popular movies</h2>
+        <MovieGrid />
+      </section>
     </main>
   );
 }
