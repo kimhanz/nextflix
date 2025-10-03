@@ -8,8 +8,9 @@ export default function Home() {
       <Navbar />
       <Hero />
       <section>
-        <h2>Popular movies</h2>
-        <MovieGrid />
+        <div className="pb-40">
+          <MovieGrid title="Popular on Netflix" />
+        </div>
       </section>
     </main>
   );

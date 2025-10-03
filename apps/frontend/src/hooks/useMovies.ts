@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useMoviesStore } from "../store/movies";
 
-export function useMovies(page: number = 1) {
+export const useMovies = (page: number = 1) => {
   const { setMovies, items } = useMoviesStore();
 
   useEffect(() => {
@@ -11,4 +11,4 @@ export function useMovies(page: number = 1) {
   }, [page, setMovies]);
 
   return items;
-}
+};
