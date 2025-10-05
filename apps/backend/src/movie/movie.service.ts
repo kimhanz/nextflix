@@ -29,13 +29,31 @@ export class MovieService {
 
   async byId(id: string | number) {
     try {
-      const { data } = await firstValueFrom(
+      // movie detail
+      const { data: detail } = await firstValueFrom(
         this.http.get(`${this.base}/movie/${id}`, {
           headers: this.headers(),
           params: { language: 'en-US' },
         }),
       );
-      return data;
+
+      // certification
+      const { data: releases } = await firstValueFrom(
+        this.http.get(`${this.base}/movie/${id}/release_dates`, {
+          headers: this.headers(),
+        }),
+      );
+
+      // certification of US
+      let certification: string | undefined;
+      const usRelease = releases.results.find(
+        (r: any) => r.iso_3166_1 === 'US',
+      );
+      if (usRelease?.release_dates?.length > 0) {
+        certification = usRelease.release_dates[0].certification || undefined;
+      }
+
+      return { detail, certification };
     } catch {
       throw new InternalServerErrorException('Upstream error');
     }
@@ -47,6 +65,20 @@ export class MovieService {
         this.http.get(`${this.base}/search/movie`, {
           headers: this.headers(),
           params: { query, page, include_adult: false, language: 'en-US' },
+        }),
+      );
+      return data;
+    } catch {
+      throw new InternalServerErrorException('Upstream error');
+    }
+  }
+
+  async videos(id: string | number) {
+    try {
+      const { data } = await firstValueFrom(
+        this.http.get(`${this.base}/movie/${id}/videos`, {
+          headers: this.headers(),
+          params: { language: 'en-US' },
         }),
       );
       return data;

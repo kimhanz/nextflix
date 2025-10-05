@@ -18,7 +18,7 @@ const Hero = () => {
   }
 
   return (
-    <section className="relative h-[56.25vw]">
+    <section className="relative h-[56.25vw] bg-black z-0">
       <img
         className="w-full h-full object-cover brightness-[60%]"
         src={movie.backdrop}

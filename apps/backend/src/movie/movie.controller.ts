@@ -2,8 +2,8 @@ import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { MovieService } from './movie.service';
 import { mapDetail, mapList } from './movie.mapper';
-import { MovieDto } from './dtos/movie.dto';
 import { MovieDetailDto } from './dtos/movie-detail.dto';
+import { MovieListDto } from './dtos/movie-list.dto';
 
 @ApiTags('movies')
 @Controller('movies')
@@ -11,7 +11,7 @@ export class MovieController {
   constructor(private readonly service: MovieService) {}
 
   @Get()
-  @ApiOkResponse({ type: [MovieDto] })
+  @ApiOkResponse({ type: [MovieListDto] })
   @ApiQuery({ name: 'page', required: false, type: Number })
   async getPopular(@Query('page') page = '1') {
     const data = await this.service.popular(Number(page));
@@ -20,7 +20,7 @@ export class MovieController {
   }
 
   @Get('search')
-  @ApiOkResponse({ type: [MovieDto] })
+  @ApiOkResponse({ type: [MovieListDto] })
   @ApiQuery({ name: 'q', required: true, type: String })
   @ApiQuery({ name: 'page', required: false, type: Number })
   async search(@Query('q') q: string, @Query('page') page = '1') {
