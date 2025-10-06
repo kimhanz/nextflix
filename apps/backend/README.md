@@ -1,98 +1,212 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Nextflix — Backend (NestJS + Swagger + TMDB)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend ของ “Nextflix” ทำหน้าที่เป็น API Gateway เรียกข้อมูลจาก TMDB → Normalize/Transform → ให้ Frontend ใช้งาน
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Link
 
-## Description
+- Production API:: https://<your-backend-on-render>h.onrender.com
+- Swagger Docs: https://<your-backend-on-render>.com/api
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
+#### Endpoints
+- GET /movies?page=1 — รายการหนัง (popular)
+- GET /movies/search?q=...&page=1 — ค้นหาหนัง
+- GET /movies/:id — รายละเอียดหนัง (รวม backdrop/poster/overview/rating)
+#### Swagger (OpenAPI): พร้อม “Try it out”
+#### Error Handling: แปลง upstream error เป็น 5xx ที่เหมาะสม
+#### CORS: เปิดเฉพาะ origin ของ Frontend (Vercel) ใน main.ts
 
-## Project setup
+## Project Structure
 
-```bash
-$ npm install
+```
+apps/backend
+├─ src/
+│  ├─ app.module.ts
+│  ├─ main.ts
+│  ├─ config/
+│  │  └─ swagger.ts
+│  ├─ movie/
+│  │  ├─ movie.module.ts
+│  │  ├─ movie.controller.ts
+│  │  ├─ movie.service.ts
+│  │  ├─ movie.mapper.ts
+│  │  └─ dtos/
+│  │     ├─ movie-list.dto.ts     # list item schema
+│  │     ├─ movie.dto.ts          # movie schema
+│  │     └─ movie-detail.dto.ts   # detail schema
+│  └─ common/...
+├─ package.json
+└─ tsconfig.json
 ```
 
-## Compile and run the project
+## ติดตั้ง & รัน (Local)
 
-```bash
-# development
-$ npm run start
+ต้องมี Node.js 18+
 
-# watch mode
-$ npm run start:dev
+```
+cd apps/backend
+npm install
 
-# production mode
-$ npm run start:prod
+/* สร้างไฟล์ env */
+cp .env.example .env
 ```
 
-## Run tests
+แก้ไข .env (ตัวอย่าง):
 
-```bash
-# unit tests
-$ npm run test
+```
+// Server
+PORT=3001
 
-# e2e tests
-$ npm run test:e2e
+// Swagger
+SWAGGER_PATH=/api/docs
 
-# test coverage
-$ npm run test:cov
+// CORS
+CORS_ORIGIN=https://<your-frontend-on-vercel>.vercel.app
+
+// TMDB
+TMDB_API_BASE_URL=https://api.themoviedb.org/3
+TMDB_API_KEY=<YOUR_TMDB_READ_ACCESS_TOKEN_BEARER>
+```
+สำคัญ: TMDB_API_KEY คือ API Read Access Token (v4 auth) (รูปแบบ Bearer) จาก TMDB
+
+
+รัน dev
+
+```
+npm run start:dev
+# เปิด http://localhost:3001
+# Swagger: http://localhost:3001/api
 ```
 
-## Deployment
+Build + start
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+npm run build
+npm run start:prod
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## การตั้งค่า Swagger & CORS
 
-## Resources
+src/main.ts (สรุปแนวทางที่เข้ากันกับ Deploy)
+```
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { setupSwagger } from './config/swagger';
+import * as dotenv from 'dotenv';
 
-Check out a few resources that may come in handy when working with NestJS:
+async function bootstrap() {
+  dotenv.config();
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+  const app = await NestFactory.create(AppModule, { cors: true });
 
-## Support
+  // CORS (ตั้งตาม .env)
+  const origin = process.env.CORS_ORIGIN?.split(',').map(s => s.trim()) ?? ['*'];
+  app.enableCors({
+    origin,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  });
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-## Stay in touch
+  // Swagger
+  setupSwagger(app);
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+  await app.listen(process.env.PORT ?? 3001);
+}
+bootstrap();
+```
+src/config/swagger.ts
+```
+import { INestApplication } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-## License
+export function setupSwagger(app: INestApplication) {
+  const config = new DocumentBuilder()
+    .setTitle('Nextflix API')
+    .setDescription('API gateway for movie data (TMDB → normalized)')
+    .setVersion('1.0.0')
+    .build();
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+  const document = SwaggerModule.createDocument(app, config);
+  const path = process.env.SWAGGER_PATH || '/api/docs';
+  SwaggerModule.setup(path.replace(/^\//, ''), app, document);
+}
+```
+
+## Deploy (Render)
+
+1. Create new Web Service → Connect GitHub repo
+2. Root Directory: apps/backend
+3. Build & Start (Render Dashboard)
+   - Build Command: npm install && npm run build
+   - Start Command: npm run start:prod
+4. Environment Variables
+   - PORT=10000 (Render set automatically; ใน Nest ใช้ process.env.PORT)
+	 - SWAGGER_PATH=/api/docs
+   - CORS_ORIGIN=https://<your-frontend-on-vercel>.vercel.app
+	 -	TMDB_API_BASE_URL=https://api.themoviedb.org/3
+	 -	TMDB_API_KEY=<YOUR_TMDB_READ_ACCESS_TOKEN_BEARER>
+
+เสร็จแล้วจะได้ URL ประมาณ https://<service-name>.onrender.com
+ทดสอบ: GET /movies และเปิด Swagger ที่ /api/docs
+
+
+## สถาปัตยกรรม (ฝั่ง Backend)
+
+```
+graph TD
+  FE[Frontend] --> BE[Nextflix NestJS API]
+  BE -->|popular/search/detail| TMDB[(TMDB API)]
+  BE -->|map/normalize| DTOs[Movie DTOs (List/Detail)]
+```
+
+- Controller: รับ HTTP + validate params
+- Service: เรียก TMDB + รวมข้อมูลที่จำเป็น (popular/detail/search)
+- Mapper: แปลงรูปแบบ TMDB → DTO กลาง (id/title/poster/backdrop/overview/releaseDate/rating)
+- DTO: สัญญาโครงสร้างข้อมูลให้ Frontend ใช้งานสะดวก
+
+## รายการ Endpoint (ตัวอย่าง)
+
+#### GET /movies?page=1
+##### Response
+```
+{
+  "items": [
+    {
+      "id": 550,
+      "title": "Fight Club",
+      "poster": "https://image.tmdb.org/t/p/w342/abc.jpg",
+      "backdrop": "https://image.tmdb.org/t/p/w780/xyz.jpg",
+      "overview": "A ticking-time-bomb insomniac...",
+      "releaseDate": "1999-10-15",
+      "rating": 8.4
+    }
+  ],
+  "page": 1,
+  "totalPages": 500
+}
+```
+
+#### GET /movies/:id
+##### Response (ย่อ)
+```
+{
+  "id": 550,
+  "title": "Fight Club",
+  "poster": "https://image.tmdb.org/t/p/w500/abc.jpg",
+  "backdrop": "https://image.tmdb.org/t/p/original/xyz.jpg",
+  "overview": "...",
+  "releaseDate": "1999-10-15",
+  "rating": 8.4
+}
+```
+
+## Troubleshooting
+
+- 500 Internal Server Error / Upstream error
+→ ตรวจ .env โดยเฉพาะ TMDB_API_KEY (ต้องเป็น Read Access Token (v4) ขึ้นต้นด้วย Bearer) และ TMDB_API_BASE_URL=https://api.themoviedb.org/3
+- CORS blocked
+→ ตรวจ CORS_ORIGIN ให้รวมโดเมนของ Vercel ที่ถูกต้อง
+- Swagger 404
+→ ตรวจ SWAGGER_PATH และ path ที่ตั้งใน setupSwagger(app) ให้ตรงกัน (เช่น /api/docs)
