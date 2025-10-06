@@ -1,32 +1,42 @@
 import { useEffect, useState } from "react";
-
-interface HeroMovie {
-  id: number;
-  title: string;
-  backdrop: string;
-  overview: string;
-}
+import { MovieAPI } from "../lib/api";
+import { MovieListDto } from "@/types/movie";
+import { useMoviesStore } from "../store/movies";
 
 export const useHeroMovie = () => {
-  const [movie, setMovie] = useState<HeroMovie | null>(null);
+  const {
+    heroMovie,
+    heroLoading,
+    heroError,
+    setHeroMovie,
+    setHeroLoading,
+    setHeroError,
+  } = useMoviesStore();
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchMovie = async () => {
       try {
-        const res = await fetch("http://localhost:3001/movies");
-        const data = await res.json();
+        setHeroLoading(true);
+        setHeroError(null);
 
-        // First Movie is Hero
-        if (data.items?.length > 0) {
-          const randomIndex = Math.floor(Math.random() * data.items.length);
-          setMovie(data.items[randomIndex]);
-        }
-      } catch (error) {
-        console.error("Failed to fetch hero movie:", error);
+        const data: MovieListDto = await MovieAPI.getRandomHero();
+        if (!isMounted) return;
+        setHeroMovie(data);
+      } catch (err: any) {
+        if (isMounted)
+          setHeroError(err.message || "Failed to fetch hero movie");
+      } finally {
+        if (isMounted) setHeroLoading(false);
       }
     };
     fetchMovie();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  return movie;
+  return { heroMovie, heroLoading, heroError };
 };

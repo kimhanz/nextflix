@@ -8,20 +8,12 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { TiThumbsUp } from "react-icons/ti";
 import { IoChevronDownSharp } from "react-icons/io5";
 import { GoDotFill } from "react-icons/go";
+import { MovieListDto } from "@/types/movie";
 
 import Portal from "./Portal";
+import Link from "next/link.js";
 
-interface MovieCardProps {
-  id: number;
-  title: string;
-  poster: string;
-  backdrop: string;
-  overview: string;
-  releaseDate?: string;
-  rating?: number;
-}
-
-const MovieCard: React.FC<MovieCardProps> = ({ title, poster, backdrop }) => {
+const MovieCard: React.FC<MovieListDto> = ({ id, title, poster, backdrop }) => {
   const [hovered, setHovered] = useState(false);
   const [rect, setRect] = useState<{
     top: number;
@@ -83,32 +75,23 @@ const MovieCard: React.FC<MovieCardProps> = ({ title, poster, backdrop }) => {
                 <p className="text-white/80 tracking-wider py-2">{title}</p>
                 <div className="flex justify-between items-center gap-3 mb-6 mt-1 w-full">
                   <div className="flex flex-3 gap-x-2 justify-start">
-                    <div
-                      className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
-                      onClick={() => {}}
-                    >
+                    <div className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300">
                       <RiPlayLargeFill className="w-4 h-4 md:w-6 md:h-6 lg:w-7 lg:h-7" />
                     </div>
-                    <div
-                      className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border-2 border-white/30 rounded-full flex justify-center items-center transition hover:border-neutral-300"
-                      onClick={() => {}}
-                    >
+                    <div className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border-2 border-white/30 rounded-full flex justify-center items-center transition hover:border-neutral-300">
                       <AiOutlinePlus className="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
-                    <div
-                      className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border-2 border-white/30 rounded-full flex justify-center items-center transition hover:border-neutral-300"
-                      onClick={() => {}}
-                    >
+                    <div className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border-2 border-white/30 rounded-full flex justify-center items-center transition hover:border-neutral-300">
                       <TiThumbsUp className="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-white" />
                     </div>
                   </div>
                   <div className="flex flex-1 justify-end">
-                    <div
+                    <Link
+                      href={`/movies/${id}`}
                       className="cursor-pointer w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10 border-2 border-white/30 rounded-full flex justify-center items-center transition hover:border-neutral-300"
-                      onClick={() => {}}
                     >
                       <IoChevronDownSharp className="w-3 h-3 md:w-4 md:h-4 lg:w-6 lg:h-6 text-white" />
-                    </div>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex flex-start w-full items-center gap-x-2 gap-y-0 mb-5">
