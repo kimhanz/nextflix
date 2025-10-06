@@ -4,7 +4,7 @@ import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class MovieService {
-  private base = 'https://api.themoviedb.org/3';
+  private base = process.env.TMDB_API_BASE_URL;
   private apiKey = process.env.TMDB_API_KEY;
 
   constructor(private http: HttpService) {}

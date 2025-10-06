@@ -8,13 +8,13 @@ export class MovieDetailDto {
   title!: string;
 
   @ApiProperty({
-    example: 'https://image.tmdb.org/t/p/w500/abcd1234.jpg',
+    example: `${process.env.TMDB_API_BASE_IMG}/w500/abcd1234.jpg`,
     description: 'Poster image (vertical)',
   })
   poster!: string;
 
   @ApiProperty({
-    example: 'https://image.tmdb.org/t/p/w1280/xyz987.jpg',
+    example: `${process.env.TMDB_API_BASE_IMG}/w1280/xyz987.jpg`,
     description: 'Backdrop image (horizontal, high resolution)',
     required: false,
   })

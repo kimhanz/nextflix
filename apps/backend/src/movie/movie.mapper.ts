@@ -3,7 +3,7 @@ import { mapCertification } from '../utils/certification-mapper';
 const IMG = (
   path?: string,
   size: 'w185' | 'w342' | 'w500' | 'w780' | 'original' = 'w342',
-) => (path ? `https://image.tmdb.org/t/p/${size}${path}` : '');
+) => (path ? `${process.env.TMDB_API_BASE_IMG}/${size}${path}` : '');
 
 export const mapList = (item: any) => ({
   id: item.id,
