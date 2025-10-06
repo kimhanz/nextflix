@@ -12,7 +12,6 @@
   "framework": "nextjs",
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
-  "ignoreCommand": "echo 'No ignore rules'",
   "installCommand": "npm install",
   "rewrites": [
     {
