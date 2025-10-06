@@ -1,5 +1,3 @@
-import { mapCertification } from '../utils/certification-mapper';
-
 const IMG = (
   path?: string,
   size: 'w185' | 'w342' | 'w500' | 'w780' | 'original' = 'w342',
@@ -15,8 +13,8 @@ export const mapList = (item: any) => ({
   rating: item.vote_average ?? undefined,
 });
 
-export const mapDetail = (data: { detail: any; certification?: string }) => {
-  const { detail, certification } = data;
+export const mapDetail = (data: { detail: any }) => {
+  const { detail } = data;
 
   return {
     id: detail.id,
@@ -25,9 +23,6 @@ export const mapDetail = (data: { detail: any; certification?: string }) => {
     backdrop: IMG(detail.backdrop_path, 'original'),
     overview: detail.overview ?? '',
     releaseDate: detail.release_date ?? detail.first_air_date ?? undefined,
-    runtime: detail.runtime ?? undefined,
-    genres: (detail.genres ?? []).map((g: any) => g.name),
     rating: detail.vote_average ?? undefined,
-    certification: mapCertification(certification || ''),
   };
 };

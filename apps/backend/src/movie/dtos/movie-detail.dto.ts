@@ -30,30 +30,9 @@ export class MovieDetailDto {
   releaseDate?: string;
 
   @ApiProperty({
-    example: 139,
-    description: 'Runtime in minutes',
-    required: false,
-  })
-  runtime?: number;
-
-  @ApiProperty({
-    example: ['Drama', 'Thriller'],
-    isArray: true,
-    required: false,
-  })
-  genres?: string[];
-
-  @ApiProperty({
     example: 8.4,
     description: 'Average rating (0-10)',
     required: false,
   })
   rating?: number;
-
-  @ApiProperty({
-    example: '16+',
-    description: 'Age certification normalized (e.g. 13+, 16+, 18+)',
-    required: false,
-  })
-  certification?: string;
 }
