@@ -23,8 +23,8 @@ const MovieDetailPage = () => {
           className="w-full md:w-1/3 rounded-lg shadow-lg object-cover"
         />
         <div className="flex-1 space-y-4">
-          <h1 className="text-4xl font-bold">{movie.title}</h1>
-          <p className="text-white/70 text-lg">{movie.overview}</p>
+          <h1 className="text-3xl md:text-4xl font-bold">{movie.title}</h1>
+          <p className="text-white/70 text-sm md:text-lg">{movie.overview}</p>
 
           <div className="flex gap-4 flex-wrap text-sm md:text-lg text-white/60">
             {movie.releaseDate && <span>{movie.releaseDate}</span>}
