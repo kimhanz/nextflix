@@ -24,9 +24,9 @@ const MovieDetailPage = () => {
         />
         <div className="flex-1 space-y-4">
           <h1 className="text-3xl font-bold">{movie.title}</h1>
-          <p className="text-white/70">{movie.overview}</p>
+          <p className="text-white/70 text-lg">{movie.overview}</p>
 
-          <div className="flex gap-4 flex-wrap text-sm text-white/60">
+          <div className="flex gap-4 flex-wrap text-sm md:text-lg text-white/60">
             {movie.releaseDate && <span>{movie.releaseDate}</span>}
             {movie.rating && <span>⭐ {movie.rating.toFixed(1)}</span>}
           </div>
