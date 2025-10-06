@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 interface AccountMenuProps {
@@ -12,7 +13,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
     <div className="bg-black w-56 absolute top-13 right-0 py-5 flex-col flex opacity-90">
       <div className="flex flex-col gap-3">
         <div className="px-3 group/item flex flex-row gap-3 items-center w-full">
-          <img
+          <Image
             className="w-8 rouneded-md"
             src="/images/default-image.jpg"
             alt="profile"

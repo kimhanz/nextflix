@@ -9,6 +9,7 @@ import { FaRegBell } from "react-icons/fa";
 import NavbarItem from "./NavbarItem";
 import MobileMenu from "./MobileMenu";
 import AccountMenu from "./AccountMenu";
+import Image from "next/image";
 
 const TOP_OFFSET = 66;
 
@@ -89,7 +90,7 @@ const Navbar = () => {
             className="flex flex-row items-center gap-2 cursor-pointer relative"
           >
             <div className="w-8 h-8 rounded-md overflow-hidden">
-              <img src="/images/default-image.jpg" alt="profile" />
+              <Image src="/images/default-image.jpg" alt="profile" />
             </div>
             <BiCaretDown
               className={`hidden md:inline-block text-white transition ${

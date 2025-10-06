@@ -12,6 +12,7 @@ import { MovieListDto } from "@/types/movie";
 
 import Portal from "./Portal";
 import Link from "next/link.js";
+import Image from "next/image";
 
 const MovieCard: React.FC<MovieListDto> = ({ id, title, poster, backdrop }) => {
   const [hovered, setHovered] = useState(false);
@@ -44,7 +45,7 @@ const MovieCard: React.FC<MovieListDto> = ({ id, title, poster, backdrop }) => {
       onMouseLeave={() => setHovered(false)}
     >
       {/* thumbnail */}
-      <img
+      <Image
         className="cursor-pointer object-cover transition duration-300 shadow-xl rounded-md w-full h-full"
         src={backdrop || poster}
         alt={title}
@@ -66,7 +67,7 @@ const MovieCard: React.FC<MovieListDto> = ({ id, title, poster, backdrop }) => {
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
               transition={{ duration: 0.7, ease: "anticipate" }}
             >
-              <img
+              <Image
                 className="cursor-pointer object-cover transition duration-300 shadow-xl rounded-t-md w-full h-full relative"
                 src={backdrop}
                 alt={title}

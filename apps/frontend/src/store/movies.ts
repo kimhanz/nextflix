@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { MovieListDto, MovieListResponse } from "@/types/movie";
 import { MovieAPI } from "@/lib/api";
+import { getErrorMessage } from "@/lib/handleError";
 
 interface MoviesState {
   items: MovieListDto[];
@@ -84,9 +85,9 @@ export const useMoviesStore = create<MoviesState>((set) => ({
         loading: false,
         error: null,
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error fetching movies:", err);
-      set({ error: err.message || "Unknown error", loading: false });
+      set({ error: getErrorMessage(err) || "Unknown error", loading: false });
     }
   },
 }));

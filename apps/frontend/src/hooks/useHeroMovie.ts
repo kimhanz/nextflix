@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MovieAPI } from "../lib/api";
 import { MovieListDto } from "@/types/movie";
 import { useMoviesStore } from "../store/movies";
+import { getErrorMessage } from "@/lib/handleError";
 
 export const useHeroMovie = () => {
   const {
@@ -24,9 +25,9 @@ export const useHeroMovie = () => {
         const data: MovieListDto = await MovieAPI.getRandomHero();
         if (!isMounted) return;
         setHeroMovie(data);
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (isMounted)
-          setHeroError(err.message || "Failed to fetch hero movie");
+          setHeroError(getErrorMessage(err) || "Failed to fetch hero movie");
       } finally {
         if (isMounted) setHeroLoading(false);
       }
