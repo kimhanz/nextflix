@@ -5,7 +5,6 @@ import { IoIosInformationCircleOutline } from "react-icons/io";
 import { RiPlayLargeFill } from "react-icons/ri";
 import { useHeroMovie } from "../hooks/useHeroMovie";
 import Link from "next/link.js";
-import Image from "next/image";
 
 const Hero: React.FC = () => {
   const { heroMovie, heroLoading, heroError } = useHeroMovie();
@@ -44,7 +43,7 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative h-[56.25vw] bg-black z-0">
-      <Image
+      <img
         className="w-full h-full object-cover brightness-[60%]"
         src={heroMovie.backdrop}
         alt={heroMovie.title}
@@ -52,12 +51,12 @@ const Hero: React.FC = () => {
 
       <div className="absolute top-[20%] ml-5 mt-9 md:ml-16">
         <div className="flex items-center justify-start w-full gap-x-1 md:gap-x-3">
-          <Image
+          <img
             className="w-1.5 h-3 md:w-3.5 md:h-6 lg:w-5 lg:h-8"
             src="/images/logo-n.svg"
             alt="logo-netflix"
           />
-          <Image
+          <img
             className="w-8 h-full md:w-18 lg:w-24"
             src="/images/series.svg"
             alt="series"

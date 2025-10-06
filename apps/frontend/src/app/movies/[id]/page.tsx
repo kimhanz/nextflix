@@ -4,7 +4,6 @@ import { useParams } from "next/navigation.js";
 import { useMovieDetail } from "../../../hooks/useMovieDetail";
 import LoadingState from "../../../components/states/LoadingState";
 import ErrorState from "../../../components/states/ErrorState";
-import Image from "next/image";
 
 const MovieDetailPage = () => {
   const { id } = useParams();
@@ -18,7 +17,7 @@ const MovieDetailPage = () => {
   return (
     <div className="min-h-screen bg-black text-white px-6 md:px-12 py-10">
       <div className="flex flex-col md:flex-row gap-8">
-        <Image
+        <img
           src={movie.poster}
           alt={movie.title}
           className="w-full md:w-1/3 rounded-lg shadow-lg object-cover"
